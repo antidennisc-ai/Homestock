@@ -1,251 +1,223 @@
-
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#5B5FEF">
+<link rel="manifest" href="manifest.json">
+<title>全家庫有 RichHome</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden}
 :root{
---bg:#F7F8FF;--bg2:#FFFFFF;--bg3:#EEF0FF;--card:#FFFFFF;--card2:#F4F5FF;
---accent:#5B5FEF;--accent2:#7C3AED;--green:#16A34A;--yellow:#D97706;--red:#DC2626;
---green-bg:#DCFCE7;--yellow-bg:#FEF3C7;--red-bg:#FEE2E2;
---green-light:#BBF7D0;--yellow-light:#FDE68A;--red-light:#FECACA;
---text:#1E1B4B;--text2:#4C4F8A;--text3:#9396C4;--border:#E0E3FF;--radius:14px;
+  --bg:#F7F8FF;--bg3:#EEF0FF;
+  --accent:#5B5FEF;--accent2:#7C3AED;
+  --green:#16A34A;--yellow:#D97706;--red:#DC2626;
+  --green-bg:#DCFCE7;--yellow-bg:#FEF3C7;--red-bg:#FEE2E2;
+  --green-lt:#BBF7D0;--yellow-lt:#FDE68A;--red-lt:#FECACA;
+  --text:#1E1B4B;--text2:#4C4F8A;--text3:#9396C4;--border:#E0E3FF;--r:14px;
 }
-body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh}
-.app{max-width:430px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;background:var(--bg)}
-
-.header{background:#FFFFFF;padding:16px 20px 12px;border-bottom:1.5px solid var(--border);position:sticky;top:0;z-index:100}
+.app{position:fixed;inset:0;display:flex;flex-direction:column;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:var(--text)}
+.header{background:#fff;padding-top:calc(env(safe-area-inset-top,0px) + 12px);padding-left:16px;padding-right:16px;padding-bottom:10px;border-bottom:1.5px solid var(--border);flex-shrink:0}
 .header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-.logo{font-size:20px;font-weight:700;color:var(--accent);letter-spacing:-0.5px}
-.logo-sub{color:var(--text3);font-weight:400;font-size:12px;display:block;margin-top:1px}
-.header-actions{display:flex;gap:8px}
-.icon-btn{background:var(--bg3);border:1.5px solid var(--border);color:var(--accent);width:38px;height:38px;border-radius:10px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;font-weight:600}
-.icon-btn:active{background:var(--accent);color:#fff}
-
-.search-bar{background:var(--bg3);border:1.5px solid var(--border);border-radius:10px;padding:9px 14px;display:flex;align-items:center;gap:8px}
-.search-bar input{background:none;border:none;outline:none;color:var(--text);flex:1;font-size:14px}
-.search-bar input::placeholder{color:var(--text3)}
-
-.nav{background:#FFFFFF;border-top:1.5px solid var(--border);display:flex;padding:8px 0 max(8px,env(safe-area-inset-bottom));position:sticky;bottom:0}
-.nav-btn{flex:1;background:none;border:none;color:var(--text3);padding:6px 4px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;font-weight:500;transition:color 0.15s}
-.nav-btn.active{color:var(--accent)}
-.nav-icon{font-size:20px;line-height:1}
-.nav-pip{width:5px;height:5px;border-radius:50%;background:var(--accent);margin-top:2px;opacity:0}
-.nav-btn.active .nav-pip{opacity:1}
-
-.content{flex:1;padding:16px}
-
-.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:16px}
-.stat-card{border-radius:var(--radius);padding:14px 10px;text-align:center;border:1.5px solid}
-.stat-card.ok{background:var(--green-bg);border-color:var(--green-light)}
-.stat-card.warn{background:var(--yellow-bg);border-color:var(--yellow-light)}
-.stat-card.danger{background:var(--red-bg);border-color:var(--red-light)}
-.stat-num{font-size:26px;font-weight:700}
-.stat-num.ok{color:var(--green)}
-.stat-num.warn{color:var(--yellow)}
-.stat-num.danger{color:var(--red)}
-.stat-label{font-size:11px;font-weight:500;margin-top:2px}
-.stat-label.ok{color:#15803D}
-.stat-label.warn{color:#B45309}
-.stat-label.danger{color:#B91C1C}
-
-.cats{display:flex;gap:7px;overflow-x:auto;margin-bottom:16px;padding-bottom:2px;scrollbar-width:none}
+.logo{font-size:17px;font-weight:800;color:var(--accent);line-height:1.2}
+.logo span{color:var(--accent2)}
+.logo-sub{color:var(--text3);font-weight:400;font-size:11px;display:block;margin-top:1px}
+.hbtns{display:flex;gap:7px}
+.ibtn{background:var(--bg3);border:1.5px solid var(--border);color:var(--accent);width:36px;height:36px;border-radius:9px;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center}
+.ibtn:active{background:var(--accent);color:#fff}
+.sbar{background:var(--bg3);border:1.5px solid var(--border);border-radius:9px;padding:8px 12px;display:flex;align-items:center;gap:7px}
+.sbar input{background:none;border:none;outline:none;color:var(--text);flex:1;font-size:14px}
+.sbar input::placeholder{color:var(--text3)}
+.content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:14px 16px}
+.nav{background:#fff;border-top:1.5px solid var(--border);display:flex;flex-shrink:0;padding-bottom:env(safe-area-inset-bottom,0px)}
+.nbtn{flex:1;background:none;border:none;color:var(--text3);padding:8px 4px 6px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;font-weight:500}
+.nbtn.active{color:var(--accent)}
+.nicon{font-size:20px;line-height:1}
+.npip{width:4px;height:4px;border-radius:50%;background:var(--accent);opacity:0;margin:1px auto 0}
+.nbtn.active .npip{opacity:1}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:14px}
+.sc{border-radius:12px;padding:12px 8px;text-align:center;border:1.5px solid}
+.sc.ok{background:var(--green-bg);border-color:var(--green-lt)}
+.sc.wn{background:var(--yellow-bg);border-color:var(--yellow-lt)}
+.sc.ng{background:var(--red-bg);border-color:var(--red-lt)}
+.sn{font-size:24px;font-weight:700}
+.sn.ok{color:var(--green)}.sn.wn{color:var(--yellow)}.sn.ng{color:var(--red)}
+.sl{font-size:11px;font-weight:500;margin-top:1px}
+.sl.ok{color:#15803D}.sl.wn{color:#B45309}.sl.ng{color:#B91C1C}
+.cats{display:flex;gap:6px;overflow-x:auto;margin-bottom:14px;scrollbar-width:none;padding-bottom:2px}
 .cats::-webkit-scrollbar{display:none}
-.cat-pill{background:#fff;border:1.5px solid var(--border);color:var(--text2);padding:6px 14px;border-radius:20px;white-space:nowrap;font-size:13px;cursor:pointer;flex-shrink:0;font-weight:500}
-.cat-pill.active{background:var(--accent);border-color:var(--accent);color:#fff}
-
-.items-grid{display:flex;flex-direction:column;gap:10px}
-.item-card{background:#fff;border-radius:var(--radius);padding:14px;border:1.5px solid var(--border);display:flex;align-items:center;gap:12px;cursor:pointer;transition:border-color 0.15s}
-.item-card:active{border-color:var(--accent)}
-.item-card.low{border-left:4px solid var(--yellow);border-radius:0 var(--radius) var(--radius) 0}
-.item-card.empty{border-left:4px solid var(--red);border-radius:0 var(--radius) var(--radius) 0}
-.item-emoji{font-size:26px;width:46px;height:46px;background:var(--bg3);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1.5px solid var(--border)}
-.item-info{flex:1;min-width:0}
-.item-name{font-size:15px;font-weight:600;color:var(--text);margin-bottom:3px}
-.item-meta{font-size:12px;color:var(--text3);display:flex;gap:6px;align-items:center;flex-wrap:wrap}
-.qty-controls{display:flex;flex-direction:column;gap:5px;align-items:center}
-.qty-btn{background:var(--bg3);border:1.5px solid var(--border);color:var(--accent);width:30px;height:30px;border-radius:8px;cursor:pointer;font-size:16px;font-weight:700;display:flex;align-items:center;justify-content:center;line-height:1}
-.qty-btn:active{background:var(--accent);color:#fff;border-color:var(--accent)}
-.item-qty{font-size:20px;font-weight:700;min-width:28px;text-align:center}
-.item-qty.ok{color:var(--green)}
-.item-qty.warn{color:var(--yellow)}
-.item-qty.empty{color:var(--red)}
-
-.section-title{font-size:13px;color:var(--text3);margin-bottom:10px;font-weight:600;display:flex;justify-content:space-between;align-items:center;text-transform:uppercase;letter-spacing:0.5px}
-
-.badge{font-size:10px;padding:3px 8px;border-radius:20px;font-weight:600}
-.badge-green{background:var(--green-bg);color:#15803D}
-.badge-yellow{background:var(--yellow-bg);color:#B45309}
-.badge-red{background:var(--red-bg);color:#B91C1C}
-.badge-purple{background:#EDE9FE;color:#6D28D9}
-
-.btn-primary{background:var(--accent);color:#fff;border:none;border-radius:12px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;width:100%;margin-top:12px}
-.btn-primary:active{opacity:0.85}
-.btn-secondary{background:#fff;color:var(--text2);border:1.5px solid var(--border);border-radius:12px;padding:12px;font-size:14px;font-weight:500;cursor:pointer;width:100%;margin-top:8px}
-.btn-danger{background:var(--red-bg);color:var(--red);border:1.5px solid var(--red-light);border-radius:12px;padding:12px;font-size:14px;font-weight:500;cursor:pointer;width:100%;margin-top:8px}
-.btn-green{background:var(--green-bg);color:var(--green);border:1.5px solid var(--green-light);border-radius:12px;padding:12px;font-size:14px;font-weight:600;cursor:pointer;flex:1;margin-top:8px}
-.btn-wa{background:#E7FFF0;color:#15803D;border:1.5px solid var(--green-light);border-radius:12px;padding:12px;font-size:14px;font-weight:600;cursor:pointer;flex:1;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:6px}
-
-.overlay{position:fixed;inset:0;background:rgba(30,27,75,0.4);z-index:200;display:none;align-items:flex-end;justify-content:center}
+.cp{background:#fff;border:1.5px solid var(--border);color:var(--text2);padding:5px 13px;border-radius:20px;white-space:nowrap;font-size:13px;cursor:pointer;flex-shrink:0;font-weight:500}
+.cp.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.stitle{font-size:11px;color:var(--text3);margin-bottom:9px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;display:flex;justify-content:space-between}
+.items{display:flex;flex-direction:column;gap:9px}
+.ic{background:#fff;border-radius:var(--r);padding:12px;border:1.5px solid var(--border);display:flex;align-items:center;gap:10px;cursor:pointer}
+.ic.low{border-left:4px solid var(--yellow);border-radius:0 var(--r) var(--r) 0}
+.ic.empty{border-left:4px solid var(--red);border-radius:0 var(--r) var(--r) 0}
+.iemoji{font-size:24px;width:42px;height:42px;background:var(--bg3);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1.5px solid var(--border)}
+.iinfo{flex:1;min-width:0}
+.iname{font-size:14px;font-weight:600;color:var(--text);margin-bottom:2px}
+.imeta{font-size:11px;color:var(--text3);display:flex;gap:5px;align-items:center;flex-wrap:wrap}
+.qc{display:flex;flex-direction:column;gap:4px;align-items:center}
+.qbtn{background:var(--bg3);border:1.5px solid var(--border);color:var(--accent);width:28px;height:28px;border-radius:7px;cursor:pointer;font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;line-height:1}
+.qbtn:active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.iqty{font-size:18px;font-weight:700;min-width:26px;text-align:center}
+.iqty.ok{color:var(--green)}.iqty.wn{color:var(--yellow)}.iqty.ng{color:var(--red)}
+.bdg{font-size:10px;padding:2px 7px;border-radius:20px;font-weight:600}
+.bdg-g{background:var(--green-bg);color:#15803D}
+.bdg-y{background:var(--yellow-bg);color:#B45309}
+.bdg-r{background:var(--red-bg);color:#B91C1C}
+.bdg-p{background:#EDE9FE;color:#6D28D9}
+.bdg-b{background:#EFF6FF;color:#1D4ED8}
+.bp{background:var(--accent);color:#fff;border:none;border-radius:11px;padding:13px;font-size:15px;font-weight:700;cursor:pointer;width:100%;margin-top:10px}
+.bs{background:#fff;color:var(--text2);border:1.5px solid var(--border);border-radius:11px;padding:11px;font-size:14px;font-weight:500;cursor:pointer;width:100%;margin-top:7px}
+.bd{background:var(--red-bg);color:var(--red);border:1.5px solid var(--red-lt);border-radius:11px;padding:11px;font-size:14px;font-weight:500;cursor:pointer;width:100%;margin-top:7px}
+.bg{background:var(--green-bg);color:var(--green);border:1.5px solid var(--green-lt);border-radius:11px;padding:11px;font-size:14px;font-weight:600;cursor:pointer;flex:1;margin-top:7px}
+.bw{background:#E7FFF0;color:#15803D;border:1.5px solid var(--green-lt);border-radius:11px;padding:11px;font-size:14px;font-weight:600;cursor:pointer;flex:1;margin-top:7px;display:flex;align-items:center;justify-content:center;gap:5px}
+.overlay{position:fixed;inset:0;background:rgba(30,27,75,0.45);z-index:200;display:none;align-items:flex-end;justify-content:center}
 .overlay.open{display:flex}
-.modal{background:#fff;border-radius:22px 22px 0 0;padding:20px;width:100%;max-width:430px;max-height:90vh;overflow-y:auto}
-.modal-handle{width:40px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 18px}
-.modal-title{font-size:18px;font-weight:700;color:var(--text);margin-bottom:16px}
-.form-group{margin-bottom:14px}
-.form-label{font-size:12px;color:var(--text3);margin-bottom:6px;display:block;font-weight:600;text-transform:uppercase;letter-spacing:0.4px}
-.form-input{background:var(--bg3);border:1.5px solid var(--border);border-radius:10px;padding:11px 14px;color:var(--text);font-size:14px;width:100%;outline:none}
-.form-input:focus{border-color:var(--accent);background:#fff}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-select.form-input option{background:#fff}
-
-.shop-item{background:#fff;border-radius:12px;padding:13px 14px;display:flex;align-items:center;gap:12px;margin-bottom:8px;border:1.5px solid var(--border)}
-.shop-check{width:24px;height:24px;border-radius:7px;border:2px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px;font-weight:700}
-.shop-check.checked{background:var(--green);border-color:var(--green);color:#fff}
-.shop-name{font-size:14px;font-weight:600;color:var(--text)}
-.shop-sub{font-size:12px;color:var(--text3);margin-top:2px}
-.shop-link{font-size:12px;color:var(--accent);font-weight:500;text-decoration:none}
-
-.family-card{background:#fff;border-radius:var(--radius);padding:16px;border:1.5px solid var(--border);margin-bottom:10px}
-.member-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1.5px solid var(--border)}
-.member-row:last-child{border-bottom:none}
-.avatar{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0}
-.invite-code{background:var(--bg3);border:2px dashed var(--border);border-radius:14px;padding:18px;text-align:center;margin-bottom:12px}
-.invite-code .code{font-size:32px;font-weight:800;letter-spacing:8px;color:var(--accent);margin:10px 0}
-.invite-code p{font-size:12px;color:var(--text3);font-weight:500}
-
-.activity-row{display:flex;gap:10px;padding:9px 0;border-bottom:1.5px solid var(--border);font-size:13px}
-.activity-row:last-child{border-bottom:none}
-.activity-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);margin-top:5px;flex-shrink:0}
-.activity-text{color:var(--text2);line-height:1.5;font-weight:500}
-.activity-time{color:var(--text3);font-size:11px;margin-top:2px}
-
-.chart-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-.chart-label{font-size:12px;color:var(--text2);width:68px;text-align:right;flex-shrink:0;font-weight:500}
-.chart-outer{flex:1;background:var(--bg3);border-radius:6px;overflow:hidden;height:24px}
-.chart-bar{height:24px;border-radius:6px;background:var(--accent);display:flex;align-items:center;padding:0 8px;min-width:28px;transition:width 0.5s}
-.chart-bar-val{font-size:11px;color:#fff;font-weight:700}
-.chart-bar.warn{background:var(--yellow)}
-.chart-bar.empty-bar{background:var(--red)}
-
-.empty-state{text-align:center;padding:40px 20px;color:var(--text3)}
-.empty-state .icon{font-size:44px;margin-bottom:12px}
-.empty-state p{font-size:14px;font-weight:500}
-
-.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:var(--text);color:#fff;padding:10px 20px;border-radius:20px;font-size:13px;font-weight:500;z-index:300;opacity:0;transition:opacity 0.3s;white-space:nowrap}
+.modal{background:#fff;border-radius:20px 20px 0 0;padding:18px 16px;width:100%;max-width:500px;max-height:88vh;overflow-y:auto;padding-bottom:calc(env(safe-area-inset-bottom,0px) + 18px)}
+.mhandle{width:38px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 16px}
+.mtitle{font-size:17px;font-weight:700;color:var(--text);margin-bottom:14px}
+.fg{margin-bottom:12px}
+.fl{font-size:11px;color:var(--text3);margin-bottom:5px;display:block;font-weight:600;text-transform:uppercase;letter-spacing:0.4px}
+.fi{background:var(--bg3);border:1.5px solid var(--border);border-radius:9px;padding:10px 13px;color:var(--text);font-size:14px;width:100%;outline:none}
+.fi:focus{border-color:var(--accent);background:#fff}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+select.fi option{background:#fff}
+.shi{background:#fff;border-radius:11px;padding:12px 13px;display:flex;align-items:center;gap:10px;margin-bottom:7px;border:1.5px solid var(--border)}
+.shck{width:22px;height:22px;border-radius:6px;border:2px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;font-weight:700}
+.shck.chk{background:var(--green);border-color:var(--green);color:#fff}
+.shn{font-size:14px;font-weight:600;color:var(--text)}
+.shs{font-size:12px;color:var(--text3);margin-top:2px}
+.shl{font-size:12px;color:var(--accent);font-weight:500;text-decoration:none;display:inline-block;margin-top:3px;margin-right:8px}
+.fc{background:#fff;border-radius:var(--r);padding:14px;border:1.5px solid var(--border);margin-bottom:9px}
+.mrow{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1.5px solid var(--border)}
+.mrow:last-child{border-bottom:none}
+.av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
+.ic2{background:var(--bg3);border:2px dashed var(--border);border-radius:13px;padding:16px;text-align:center;margin-bottom:10px}
+.ic2 .code{font-size:30px;font-weight:800;letter-spacing:7px;color:var(--accent);margin:8px 0}
+.ic2 p{font-size:12px;color:var(--text3);font-weight:500}
+.arow{display:flex;gap:9px;padding:8px 0;border-bottom:1.5px solid var(--border);font-size:13px}
+.arow:last-child{border-bottom:none}
+.adot{width:7px;height:7px;border-radius:50%;background:var(--accent);margin-top:5px;flex-shrink:0}
+.atxt{color:var(--text2);line-height:1.5;font-weight:500}
+.atime{color:var(--text3);font-size:11px;margin-top:1px}
+.cbr{display:flex;align-items:center;gap:9px;margin-bottom:9px}
+.clbl{font-size:12px;color:var(--text2);width:65px;text-align:right;flex-shrink:0;font-weight:500}
+.cout{flex:1;background:var(--bg3);border-radius:5px;overflow:hidden;height:22px}
+.cbar{height:22px;border-radius:5px;background:var(--accent);display:flex;align-items:center;padding:0 7px;min-width:26px}
+.cbarv{font-size:11px;color:#fff;font-weight:700}
+.cbar.wn{background:var(--yellow)}.cbar.ng{background:var(--red)}
+/* Timeline */
+.tl-item{display:flex;gap:12px;margin-bottom:0}
+.tl-left{display:flex;flex-direction:column;align-items:center;width:32px;flex-shrink:0}
+.tl-dot{width:10px;height:10px;border-radius:50%;border:2px solid var(--accent);background:#fff;flex-shrink:0;margin-top:3px}
+.tl-dot.filled{background:var(--accent)}
+.tl-dot.future{border-color:var(--text3);background:var(--bg3)}
+.tl-dot.warn{border-color:var(--yellow);background:var(--yellow)}
+.tl-dot.danger{border-color:var(--red);background:var(--red)}
+.tl-line{width:2px;background:var(--border);flex:1;margin:3px 0}
+.tl-content{padding-bottom:16px;flex:1}
+.tl-date{font-size:11px;color:var(--text3);font-weight:600;margin-bottom:2px}
+.tl-label{font-size:13px;font-weight:600;color:var(--text)}
+.tl-sub{font-size:12px;color:var(--text3);margin-top:1px}
+/* Forecast card */
+.forecast-card{background:#fff;border-radius:var(--r);border:1.5px solid var(--border);padding:14px;margin-bottom:10px}
+.forecast-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.forecast-name{font-size:14px;font-weight:600;color:var(--text)}
+.forecast-row{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border)}
+.forecast-row:last-child{border-bottom:none}
+.forecast-key{font-size:12px;color:var(--text3);font-weight:500}
+.forecast-val{font-size:12px;color:var(--text);font-weight:600}
+.toast{position:fixed;bottom:calc(env(safe-area-inset-bottom,0px) + 75px);left:50%;transform:translateX(-50%);background:#1E1B4B;color:#fff;padding:9px 18px;border-radius:20px;font-size:13px;font-weight:500;z-index:400;opacity:0;transition:opacity 0.25s;white-space:nowrap;pointer-events:none}
 .toast.show{opacity:1}
+.empty{text-align:center;padding:36px 16px;color:var(--text3)}
+.empty .ei{font-size:42px;margin-bottom:10px}
+.empty p{font-size:14px;font-weight:500}
 </style>
-
-<div class="app" id="app">
+</head>
+<body>
+<div class="app">
   <div class="header">
     <div class="header-top">
-      <div class="logo">家庫 HomStock<span class="logo-sub" id="family-name">我的家庭</span></div>
-      <div class="header-actions">
-        <button class="icon-btn" onclick="openScanner()" title="掃條碼">&#x1F4F7;</button>
-        <button class="icon-btn" onclick="openAddItem()" title="新增">&#x2B;</button>
+      <div class="logo">全家庫有 <span>RichHome</span><span class="logo-sub" id="fam-name">載入中...</span></div>
+      <div class="hbtns">
+        <button class="ibtn" onclick="openScanner()">📷</button>
+        <button class="ibtn" onclick="openAdd()">＋</button>
       </div>
     </div>
-    <div class="search-bar">
-      <span style="color:var(--text3);font-size:15px">&#x1F50D;</span>
-      <input type="text" placeholder="搜尋商品..." id="search-input" oninput="filterItems()">
+    <div class="sbar">
+      <span style="color:var(--text3);font-size:14px">🔍</span>
+      <input type="text" placeholder="搜尋商品..." id="srch" oninput="renderInv()">
     </div>
   </div>
-
-  <div class="content" id="main-content"></div>
-
+  <div class="content" id="content"></div>
   <nav class="nav">
-    <button class="nav-btn active" onclick="switchTab('inventory')" id="tab-inventory">
-      <span class="nav-icon">&#x1F3E0;</span>庫存<div class="nav-pip"></div>
-    </button>
-    <button class="nav-btn" onclick="switchTab('shopping')" id="tab-shopping">
-      <span class="nav-icon">&#x1F6D2;</span>採購<div class="nav-pip"></div>
-    </button>
-    <button class="nav-btn" onclick="switchTab('family')" id="tab-family">
-      <span class="nav-icon">&#x1F465;</span>家庭<div class="nav-pip"></div>
-    </button>
-    <button class="nav-btn" onclick="switchTab('analysis')" id="tab-analysis">
-      <span class="nav-icon">&#x1F4CA;</span>分析<div class="nav-pip"></div>
-    </button>
+    <button class="nbtn active" onclick="goTab('inv')" id="t-inv"><span class="nicon">🏠</span>庫存<div class="npip"></div></button>
+    <button class="nbtn" onclick="goTab('shop')" id="t-shop"><span class="nicon">🛒</span>採購<div class="npip"></div></button>
+    <button class="nbtn" onclick="goTab('fam')" id="t-fam"><span class="nicon">👨‍👩‍👧</span>家庭<div class="npip"></div></button>
+    <button class="nbtn" onclick="goTab('anal')" id="t-anal"><span class="nicon">📊</span>分析<div class="npip"></div></button>
   </nav>
 </div>
 
-<div class="overlay" id="item-modal">
+<!-- Item modal -->
+<div class="overlay" id="m-item">
   <div class="modal">
-    <div class="modal-handle"></div>
-    <div class="modal-title" id="item-modal-title">新增商品</div>
-    <div class="form-group">
-      <label class="form-label">商品名稱</label>
-      <input class="form-input" id="item-name" placeholder="例：廁紙">
-    </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label class="form-label">類別</label>
-        <select class="form-input" id="item-cat">
-          <option value="衛生">衛生</option><option value="清潔">清潔</option>
-          <option value="個人護理">個人護理</option><option value="廚房">廚房</option>
-          <option value="嬰幼兒">嬰幼兒</option><option value="其他">其他</option>
-        </select>
+    <div class="mhandle"></div>
+    <div class="mtitle" id="m-item-title">新增商品</div>
+    <div class="fg"><label class="fl">商品名稱</label><input class="fi" id="f-name" placeholder="例：廁紙"></div>
+    <div class="frow">
+      <div class="fg"><label class="fl">類別</label>
+        <select class="fi" id="f-cat"><option>衛生</option><option>清潔</option><option>個人護理</option><option>廚房</option><option>嬰幼兒</option><option>其他</option></select>
       </div>
-      <div class="form-group">
-        <label class="form-label">Emoji 圖示</label>
-        <input class="form-input" id="item-emoji" placeholder="🧻" maxlength="2">
+      <div class="fg"><label class="fl">Emoji</label><input class="fi" id="f-emoji" placeholder="🧻" maxlength="2"></div>
+    </div>
+    <div class="frow">
+      <div class="fg"><label class="fl">數量</label><input class="fi" id="f-qty" type="number" min="0" placeholder="0"></div>
+      <div class="fg"><label class="fl">單位</label>
+        <select class="fi" id="f-unit"><option>卷</option><option>瓶</option><option>包</option><option>支</option><option>盒</option><option>片</option><option>罐</option><option>個</option></select>
       </div>
     </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label class="form-label">目前數量</label>
-        <input class="form-input" id="item-qty" type="number" min="0" placeholder="0">
-      </div>
-      <div class="form-group">
-        <label class="form-label">單位</label>
-        <select class="form-input" id="item-unit">
-          <option>卷</option><option>瓶</option><option>包</option><option>支</option>
-          <option>盒</option><option>片</option><option>罐</option><option>個</option>
-        </select>
-      </div>
+    <div class="frow">
+      <div class="fg"><label class="fl">低庫存警示（數量）</label><input class="fi" id="f-thresh" type="number" min="1" placeholder="2"></div>
+      <div class="fg"><label class="fl">平均使用天數/單位</label><input class="fi" id="f-days" type="number" min="1" placeholder="7"></div>
     </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label class="form-label">低庫存警示</label>
-        <input class="form-input" id="item-threshold" type="number" min="1" placeholder="2">
-      </div>
-      <div class="form-group">
-        <label class="form-label">條碼（選填）</label>
-        <input class="form-input" id="item-barcode" placeholder="掃描或手動輸入">
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="form-label">採購連結（換行分隔）</label>
-      <textarea class="form-input" id="item-links" rows="2" placeholder="https://parknshop.com/...&#10;https://hktvmall.com/..."></textarea>
-    </div>
-    <button class="btn-primary" onclick="saveItem()">儲存</button>
-    <button class="btn-secondary" onclick="closeModal('item-modal')">取消</button>
-    <button class="btn-danger" id="delete-btn" onclick="deleteCurrentItem()" style="display:none">刪除此商品</button>
+    <div class="fg"><label class="fl">條碼（選填）</label><input class="fi" id="f-barcode" placeholder="掃描或手動輸入"></div>
+    <div class="fg"><label class="fl">採購連結（換行分隔）</label><textarea class="fi" id="f-links" rows="2" placeholder="https://parknshop.com/...&#10;https://hktvmall.com/..."></textarea></div>
+    <button class="bp" onclick="saveItem()">儲存</button>
+    <button class="bs" onclick="closeM('m-item')">取消</button>
+    <button class="bd" id="f-del" onclick="delItem()" style="display:none">刪除此商品</button>
   </div>
 </div>
 
-<div class="overlay" id="scanner-modal">
+<!-- Scanner modal -->
+<div class="overlay" id="m-scan">
   <div class="modal">
-    <div class="modal-handle"></div>
-    <div class="modal-title">條碼掃描</div>
-    <div id="scanner-video-container" style="border-radius:12px;overflow:hidden;margin-bottom:12px;background:var(--bg3);min-height:200px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--border)">
-      <video id="scanner-video" style="width:100%;border-radius:12px" autoplay playsinline muted></video>
+    <div class="mhandle"></div>
+    <div class="mtitle">條碼掃描</div>
+    <div style="border-radius:11px;overflow:hidden;margin-bottom:10px;background:var(--bg3);min-height:180px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--border)">
+      <video id="scan-vid" style="width:100%" autoplay playsinline muted></video>
     </div>
-    <div id="scanner-result" style="font-size:13px;color:var(--text2);text-align:center;margin-bottom:12px;min-height:20px;font-weight:500"></div>
-    <button class="btn-secondary" onclick="stopScanner()">取消掃描</button>
+    <div id="scan-res" style="font-size:13px;color:var(--text2);text-align:center;margin-bottom:10px;font-weight:500;min-height:18px"></div>
+    <button class="bs" onclick="stopScan()">取消掃描</button>
   </div>
 </div>
 
-<div class="overlay" id="join-modal">
+<!-- Join modal -->
+<div class="overlay" id="m-join">
   <div class="modal">
-    <div class="modal-handle"></div>
-    <div class="modal-title">加入家庭群組</div>
-    <div class="form-group">
-      <label class="form-label">你的名稱</label>
-      <input class="form-input" id="join-name" placeholder="例：媽媽">
+    <div class="mhandle"></div>
+    <div class="mtitle">加入家庭群組</div>
+    <div class="fg"><label class="fl">你的名稱</label><input class="fi" id="j-name" placeholder="例：媽媽"></div>
+    <div class="fg"><label class="fl">邀請碼</label>
+      <input class="fi" id="j-code" placeholder="輸入6位邀請碼" maxlength="6" style="text-transform:uppercase;letter-spacing:6px;font-size:20px;font-weight:700;text-align:center">
     </div>
-    <div class="form-group">
-      <label class="form-label">邀請碼</label>
-      <input class="form-input" id="join-code" placeholder="輸入6位邀請碼" maxlength="6" style="text-transform:uppercase;letter-spacing:6px;font-size:20px;font-weight:700">
-    </div>
-    <button class="btn-primary" onclick="joinFamily()">加入</button>
-    <button class="btn-secondary" onclick="closeModal('join-modal')">取消</button>
+    <div id="j-status" style="font-size:13px;color:var(--text3);text-align:center;min-height:18px;margin-top:4px;font-weight:500"></div>
+    <button class="bp" onclick="joinFam()">搜尋並加入</button>
+    <button class="bs" onclick="closeM('m-join')">取消</button>
   </div>
 </div>
 
@@ -253,416 +225,396 @@ select.form-input option{background:#fff}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, doc, onSnapshot, setDoc, deleteDoc, updateDoc, getDoc, getDocs, addDoc, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import{getFirestore,collection,doc,onSnapshot,setDoc,deleteDoc,updateDoc,getDocs,addDoc,serverTimestamp,query,orderBy}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import{getAuth,signInAnonymously,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBKSkbBv4CU0yxazEc8Ws4-zLtk6p4YsTc",
-  authDomain: "homeinventory-app.firebaseapp.com",
-  projectId: "homeinventory-app",
-  storageBucket: "homeinventory-app.firebasestorage.app",
-  messagingSenderId: "971110271746",
-  appId: "1:971110271746:web:79093bca9eb4f174b9101b"
-};
+const cfg={apiKey:"AIzaSyBKSkbBv4CU0yxazEc8Ws4-zLtk6p4YsTc",authDomain:"homeinventory-app.firebaseapp.com",projectId:"homeinventory-app",storageBucket:"homeinventory-app.firebasestorage.app",messagingSenderId:"971110271746",appId:"1:971110271746:web:79093bca9eb4f174b9101b"};
+const fb=initializeApp(cfg),db=getFirestore(fb),auth=getAuth(fb);
 
-const fbApp = initializeApp(firebaseConfig);
-const db = getFirestore(fbApp);
-const auth = getAuth(fbApp);
+let uid=null,famId=null,famName="我的家庭",myName="成員";
+let items={},members={},acts=[],tab='inv',cat='全部',editId=null,scanStr=null,shopChecked=new Set();
+let unsub1=null,unsub2=null,unsub3=null;
 
-let currentUser=null, familyId=null, familyName="我的家庭", memberName="成員";
-let items={}, members={}, activities=[], currentTab='inventory', currentCat='全部', editingItemId=null, scanStream=null, checkedShopItems=new Set();
-
-const defaultItems=[
-  {name:"廁紙",emoji:"🧻",cat:"衛生",qty:4,unit:"卷",threshold:2,links:[]},
-  {name:"洗頭水",emoji:"🧴",cat:"個人護理",qty:2,unit:"瓶",threshold:1,links:[]},
-  {name:"牙膏",emoji:"🪥",cat:"個人護理",qty:2,unit:"支",threshold:1,links:[]},
-  {name:"濕紙巾",emoji:"🧻",cat:"衛生",qty:3,unit:"包",threshold:1,links:[]},
-  {name:"洗衣液",emoji:"🫧",cat:"清潔",qty:1,unit:"瓶",threshold:1,links:[]},
-  {name:"洗碗液",emoji:"🍶",cat:"清潔",qty:2,unit:"瓶",threshold:1,links:[]},
-  {name:"沐浴露",emoji:"🚿",cat:"個人護理",qty:2,unit:"瓶",threshold:1,links:[]},
-  {name:"面紙",emoji:"📦",cat:"衛生",qty:5,unit:"盒",threshold:2,links:[]},
+const defs=[
+  {name:"廁紙",emoji:"🧻",cat:"衛生",qty:4,unit:"卷",threshold:2,daysPerUnit:3,links:[]},
+  {name:"洗頭水",emoji:"🧴",cat:"個人護理",qty:2,unit:"瓶",threshold:1,daysPerUnit:30,links:[]},
+  {name:"牙膏",emoji:"🪥",cat:"個人護理",qty:2,unit:"支",threshold:1,daysPerUnit:30,links:[]},
+  {name:"濕紙巾",emoji:"🧻",cat:"衛生",qty:3,unit:"包",threshold:1,daysPerUnit:7,links:[]},
+  {name:"洗衣液",emoji:"🫧",cat:"清潔",qty:1,unit:"瓶",threshold:1,daysPerUnit:14,links:[]},
+  {name:"洗碗液",emoji:"🍶",cat:"清潔",qty:2,unit:"瓶",threshold:1,daysPerUnit:14,links:[]},
+  {name:"沐浴露",emoji:"🚿",cat:"個人護理",qty:2,unit:"瓶",threshold:1,daysPerUnit:20,links:[]},
+  {name:"面紙",emoji:"📦",cat:"衛生",qty:5,unit:"盒",threshold:2,daysPerUnit:7,links:[]},
 ];
 
-onAuthStateChanged(auth, async user => { if(user){currentUser=user;await initFamily();} });
-signInAnonymously(auth).catch(()=>{ showToast("⚠️ 離線模式"); localMode(); });
+onAuthStateChanged(auth,async u=>{if(u){uid=u.uid;await initFam();}});
+signInAnonymously(auth).catch(()=>{toast("⚠️ 離線模式");localMode();});
 
-async function initFamily(){
-  const stored=localStorage.getItem('homstock_family');
-  if(stored){
-    const {fid,fname,mname}=JSON.parse(stored);
-    familyId=fid;familyName=fname;memberName=mname;
-    document.getElementById('family-name').textContent=fname;
-    listenFamily();
-  } else { await createFamily(); }
+async function initFam(){
+  const s=localStorage.getItem('hs_fam');
+  if(s){const d=JSON.parse(s);famId=d.fid;famName=d.fn;myName=d.mn;document.getElementById('fam-name').textContent=famName;listenFam();}
+  else await createFam();
 }
-
-async function createFamily(){
+async function createFam(){
   const code=Math.random().toString(36).substr(2,6).toUpperCase();
-  memberName="建立者";
-  const ref=doc(collection(db,'families'));
-  familyId=ref.id; familyName="我的家庭";
-  await setDoc(ref,{name:familyName,code,createdAt:serverTimestamp()});
-  await setDoc(doc(db,`families/${familyId}/members/${currentUser.uid}`),{name:memberName,uid:currentUser.uid,joinedAt:serverTimestamp()});
-  for(const item of defaultItems) await addDoc(collection(db,`families/${familyId}/items`),{...item,updatedBy:memberName,updatedAt:serverTimestamp()});
-  localStorage.setItem('homstock_family',JSON.stringify({fid:familyId,fname:familyName,mname:memberName}));
-  document.getElementById('family-name').textContent=familyName;
-  listenFamily();
+  myName="建立者";const ref=doc(collection(db,'families'));
+  famId=ref.id;famName="我的家庭";
+  await setDoc(ref,{name:famName,code,createdAt:serverTimestamp()});
+  await setDoc(doc(db,`families/${famId}/members/${uid}`),{name:myName,uid,joinedAt:serverTimestamp()});
+  for(const it of defs)await addDoc(collection(db,`families/${famId}/items`),{...it,updatedBy:myName,updatedAt:serverTimestamp(),lastRestocked:Date.now()});
+  saveFamLocal();document.getElementById('fam-name').textContent=famName;listenFam();
 }
+function saveFamLocal(){localStorage.setItem('hs_fam',JSON.stringify({fid:famId,fn:famName,mn:myName}));}
 
-function listenFamily(){
-  onSnapshot(collection(db,`families/${familyId}/items`),snap=>{
-    items={};snap.forEach(d=>items[d.id]={...d.data(),id:d.id});
-    renderCurrentTab();checkNotifications();
-  });
-  onSnapshot(collection(db,`families/${familyId}/members`),snap=>{members={};snap.forEach(d=>members[d.id]=d.data());});
-  onSnapshot(query(collection(db,`families/${familyId}/activities`),orderBy('ts','desc')),snap=>{
-    activities=[];snap.forEach(d=>activities.push(d.data()));
-    if(currentTab==='family')renderFamily();
-  });
+function listenFam(){
+  if(unsub1)unsub1();if(unsub2)unsub2();if(unsub3)unsub3();
+  unsub1=onSnapshot(collection(db,`families/${famId}/items`),sn=>{items={};sn.forEach(d=>items[d.id]={...d.data(),id:d.id});renderTab();checkNotif();});
+  unsub2=onSnapshot(collection(db,`families/${famId}/members`),sn=>{members={};sn.forEach(d=>members[d.id]=d.data());if(tab==='fam')renderFam();});
+  unsub3=onSnapshot(query(collection(db,`families/${famId}/activities`),orderBy('ts','desc')),sn=>{acts=[];sn.forEach(d=>acts.push(d.data()));if(tab==='fam')renderFam();});
 }
+async function logAct(text){try{await addDoc(collection(db,`families/${famId}/activities`),{text,member:myName,ts:serverTimestamp(),tsMs:Date.now()});}catch(e){}}
+function localMode(){items={};defs.forEach((it,i)=>{items[`l${i}`]={...it,id:`l${i}`,lastRestocked:Date.now()};});famId='local';famName="離線模式";document.getElementById('fam-name').textContent=famName;renderTab();}
 
-async function logActivity(text){
-  try{ await addDoc(collection(db,`families/${familyId}/activities`),{text,member:memberName,ts:serverTimestamp(),tsMs:Date.now()}); }catch(e){}
-}
+window.goTab=function(t){tab=t;document.querySelectorAll('.nbtn').forEach(b=>b.classList.remove('active'));document.getElementById(`t-${t}`).classList.add('active');renderTab();};
+function renderTab(){if(tab==='inv')renderInv();else if(tab==='shop')renderShop();else if(tab==='fam')renderFam();else renderAnal();}
 
-function localMode(){
-  items={};defaultItems.forEach((it,i)=>{items[`local_${i}`]={...it,id:`local_${i}`};});
-  familyId='local';renderCurrentTab();
-}
-
-window.switchTab=function(tab){
-  currentTab=tab;
-  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById(`tab-${tab}`).classList.add('active');
-  renderCurrentTab();
-};
-
-function renderCurrentTab(){
-  if(currentTab==='inventory')renderInventory();
-  else if(currentTab==='shopping')renderShopping();
-  else if(currentTab==='family')renderFamily();
-  else if(currentTab==='analysis')renderAnalysis();
-}
-
-function renderInventory(){
-  const search=(document.getElementById('search-input')||{}).value||'';
+// INVENTORY
+window.renderInv=function(){
+  const srch=(document.getElementById('srch')||{}).value||'';
   const allCats=['全部',...new Set(Object.values(items).map(i=>i.cat).filter(Boolean))];
-  let filtered=Object.values(items).filter(i=>{
-    return (currentCat==='全部'||i.cat===currentCat)&&(!search||i.name.includes(search));
-  });
+  const filt=Object.values(items).filter(i=>(cat==='全部'||i.cat===cat)&&(!srch||i.name.includes(srch)));
   const ok=Object.values(items).filter(i=>(i.qty||0)>(i.threshold||1)).length;
-  const warn=Object.values(items).filter(i=>(i.qty||0)<=(i.threshold||1)&&(i.qty||0)>0).length;
-  const empty=Object.values(items).filter(i=>(i.qty||0)===0).length;
-
-  document.getElementById('main-content').innerHTML=`
+  const wn=Object.values(items).filter(i=>(i.qty||0)<=(i.threshold||1)&&(i.qty||0)>0).length;
+  const ng=Object.values(items).filter(i=>(i.qty||0)===0).length;
+  document.getElementById('content').innerHTML=`
     <div class="stats">
-      <div class="stat-card ok"><div class="stat-num ok">${ok}</div><div class="stat-label ok">充足</div></div>
-      <div class="stat-card warn"><div class="stat-num warn">${warn}</div><div class="stat-label warn">偏低</div></div>
-      <div class="stat-card danger"><div class="stat-num danger">${empty}</div><div class="stat-label danger">需補貨</div></div>
+      <div class="sc ok"><div class="sn ok">${ok}</div><div class="sl ok">充足</div></div>
+      <div class="sc wn"><div class="sn wn">${wn}</div><div class="sl wn">偏低</div></div>
+      <div class="sc ng"><div class="sn ng">${ng}</div><div class="sl ng">需補貨</div></div>
     </div>
-    <div class="cats">${allCats.map(c=>`<div class="cat-pill${c===currentCat?' active':''}" onclick="setCat('${c}')">${c}</div>`).join('')}</div>
-    <div class="section-title"><span>${currentCat} · ${filtered.length} 項</span></div>
-    <div class="items-grid">
-      ${filtered.length?filtered.sort((a,b)=>(a.qty||0)-(b.qty||0)).map(item=>{
-        const q=item.qty||0,t=item.threshold||1;
-        const cls=q===0?'empty':q<=t?'low':'';
-        const qCls=q===0?'empty':q<=t?'warn':'ok';
-        return `<div class="item-card ${cls}" onclick="openEditItem('${item.id}')">
-          <div class="item-emoji">${item.emoji||'📦'}</div>
-          <div class="item-info">
-            <div class="item-name">${item.name}</div>
-            <div class="item-meta">
-              <span>${item.cat||''}</span><span>·</span><span>${item.unit||''}</span>
-              ${item.links&&item.links.length?`<span class="badge badge-purple">連結</span>`:''}
-              ${q===0?`<span class="badge badge-red">已用完</span>`:q<=t?`<span class="badge badge-yellow">偏低</span>`:''}
-            </div>
+    <div class="cats">${allCats.map(c=>`<div class="cp${c===cat?' active':''}" onclick="setCat('${c}')">${c}</div>`).join('')}</div>
+    <div class="stitle"><span>${cat} · ${filt.length} 項</span></div>
+    <div class="items">${filt.length?filt.sort((a,b)=>(a.qty||0)-(b.qty||0)).map(it=>{
+      const q=it.qty||0,t=it.threshold||1;
+      const cls=q===0?'empty':q<=t?'low':'';
+      const qc=q===0?'ng':q<=t?'wn':'ok';
+      return`<div class="ic ${cls}" onclick="openEdit('${it.id}')">
+        <div class="iemoji">${it.emoji||'📦'}</div>
+        <div class="iinfo">
+          <div class="iname">${it.name}</div>
+          <div class="imeta"><span>${it.cat||''}</span><span>·</span><span>${it.unit||''}</span>
+            ${it.links&&it.links.length?`<span class="bdg bdg-p">連結</span>`:''}
+            ${q===0?`<span class="bdg bdg-r">已用完</span>`:q<=t?`<span class="bdg bdg-y">偏低</span>`:''}
           </div>
-          <div class="qty-controls">
-            <button class="qty-btn" onclick="event.stopPropagation();changeQty('${item.id}',1)">＋</button>
-            <div class="item-qty ${qCls}">${q}</div>
-            <button class="qty-btn" onclick="event.stopPropagation();changeQty('${item.id}',-1)">－</button>
-          </div>
-        </div>`;
-      }).join(''):'<div class="empty-state"><div class="icon">📭</div><p>沒有商品</p></div>'}
-    </div>
-    <div style="height:20px"></div>`;
-}
-
-window.setCat=function(cat){currentCat=cat;renderInventory();};
-window.filterItems=function(){renderInventory();};
-
-window.changeQty=async function(id,delta){
-  const item=items[id];if(!item)return;
-  const newQty=Math.max(0,(item.qty||0)+delta);
-  items[id].qty=newQty;renderInventory();
-  if(familyId!=='local'){
-    await updateDoc(doc(db,`families/${familyId}/items/${id}`),{qty:newQty,updatedBy:memberName,updatedAt:serverTimestamp()});
-    await logActivity(`${memberName} 將「${item.name}」${delta>0?'增加':'減少'}至 ${newQty} ${item.unit}`);
-  }
-  if(newQty===0)showToast(`⚠️ ${item.name} 已用完！`);
-  else if(newQty<=(item.threshold||1))showToast(`🟡 ${item.name} 庫存偏低`);
-};
-
-function renderShopping(){
-  const lowItems=Object.values(items).filter(i=>(i.qty||0)<=(i.threshold||1));
-  document.getElementById('main-content').innerHTML=`
-    <div class="section-title"><span>需補貨 · ${lowItems.length} 項</span></div>
-    ${lowItems.length?lowItems.map(item=>{
-      const checked=checkedShopItems.has(item.id);
-      const links=item.links||[];
-      return `<div class="shop-item" style="${checked?'opacity:0.45':''}">
-        <div class="shop-check ${checked?'checked':''}" onclick="toggleShopCheck('${item.id}')">${checked?'✓':''}</div>
-        <div class="shop-info">
-          <div class="shop-name">${item.emoji||'📦'} ${item.name}</div>
-          <div class="shop-sub">現有 ${item.qty||0} ${item.unit} · 建議補至 ${(item.threshold||1)*3} ${item.unit}</div>
-          ${links.length?links.map((l,i)=>`<a class="shop-link" href="${l}" target="_blank" onclick="event.stopPropagation()">🛒 採購連結${links.length>1?' '+(i+1):''}</a> `).join(''):''}
         </div>
-        <span class="badge ${item.qty===0?'badge-red':'badge-yellow'}">${item.qty===0?'已用完':'偏低'}</span>
+        <div class="qc">
+          <button class="qbtn" onclick="event.stopPropagation();chQty('${it.id}',1)">＋</button>
+          <div class="iqty ${qc}">${q}</div>
+          <button class="qbtn" onclick="event.stopPropagation();chQty('${it.id}',-1)">－</button>
+        </div>
       </div>`;
-    }).join(''):'<div class="empty-state"><div class="icon">🎉</div><p>所有庫存充足！</p></div>'}
-    ${lowItems.length?`<div style="display:flex;gap:8px">
-      <button class="btn-wa" onclick="shareWhatsApp()"><span style="font-size:15px">📱</span> WhatsApp 分享</button>
-      <button class="btn-green" onclick="markAllBought()">全部已購</button>
+    }).join(''):'<div class="empty"><div class="ei">📭</div><p>沒有商品</p></div>'}</div>
+    <div style="height:16px"></div>`;
+};
+window.setCat=function(c){cat=c;renderInv();};
+window.chQty=async function(id,d){
+  const it=items[id];if(!it)return;
+  const nq=Math.max(0,(it.qty||0)+d);
+  const wasLow=(it.qty||0)<=(it.threshold||1);
+  const update={qty:nq,updatedBy:myName,updatedAt:serverTimestamp()};
+  // Record restock event when qty increases past threshold
+  if(d>0&&nq>(it.threshold||1)&&wasLow){update.lastRestocked=Date.now();update.restockHistory=it.restockHistory?[...it.restockHistory.slice(-11),Date.now()]:[Date.now()];}
+  items[id]={...items[id],...update};renderInv();
+  if(famId!=='local'){await updateDoc(doc(db,`families/${famId}/items/${id}`),update);await logAct(`${myName} 將「${it.name}」${d>0?'增加':'減少'}至 ${nq} ${it.unit}`);}
+  if(nq===0)toast(`⚠️ ${it.name} 已用完！`);
+  else if(nq<=(it.threshold||1))toast(`🟡 ${it.name} 庫存偏低`);
+};
+
+// SHOPPING
+function renderShop(){
+  const low=Object.values(items).filter(i=>(i.qty||0)<=(i.threshold||1));
+  document.getElementById('content').innerHTML=`
+    <div class="stitle"><span>需補貨 · ${low.length} 項</span></div>
+    ${low.length?low.map(it=>{
+      const chk=shopChecked.has(it.id);const lks=it.links||[];
+      return`<div class="shi" style="${chk?'opacity:0.4':''}">
+        <div class="shck${chk?' chk':''}" onclick="togShop('${it.id}')">${chk?'✓':''}</div>
+        <div style="flex:1;min-width:0">
+          <div class="shn">${it.emoji||'📦'} ${it.name}</div>
+          <div class="shs">現有 ${it.qty||0} ${it.unit} · 建議補至 ${(it.threshold||1)*3} ${it.unit}</div>
+          ${lks.map((l,i)=>`<a class="shl" href="${l}" target="_blank" onclick="event.stopPropagation()">🛒 採購連結${lks.length>1?' '+(i+1):''}</a>`).join('')}
+        </div>
+        <span class="bdg ${it.qty===0?'bdg-r':'bdg-y'}">${it.qty===0?'已用完':'偏低'}</span>
+      </div>`;
+    }).join(''):'<div class="empty"><div class="ei">🎉</div><p>所有庫存充足！</p></div>'}
+    ${low.length?`<div style="display:flex;gap:7px">
+      <button class="bw" onclick="waShare()">📱 WhatsApp 分享</button>
+      <button class="bg" onclick="markBought()">全部已購</button>
     </div>`:''}
-    <div style="height:20px"></div>`;
+    <div style="height:16px"></div>`;
 }
-
-window.toggleShopCheck=function(id){
-  if(checkedShopItems.has(id))checkedShopItems.delete(id);else checkedShopItems.add(id);
-  renderShopping();
-};
-window.markAllBought=async function(){
-  const lowItems=Object.values(items).filter(i=>(i.qty||0)<=(i.threshold||1));
-  for(const item of lowItems){
-    const nq=(item.threshold||1)*3;items[item.id].qty=nq;
-    if(familyId!=='local')await updateDoc(doc(db,`families/${familyId}/items/${item.id}`),{qty:nq,updatedBy:memberName,updatedAt:serverTimestamp()});
+window.togShop=function(id){shopChecked.has(id)?shopChecked.delete(id):shopChecked.add(id);renderShop();};
+window.markBought=async function(){
+  const low=Object.values(items).filter(i=>(i.qty||0)<=(i.threshold||1));
+  for(const it of low){
+    const nq=(it.threshold||1)*3;
+    const update={qty:nq,updatedBy:myName,updatedAt:serverTimestamp(),lastRestocked:Date.now(),restockHistory:it.restockHistory?[...it.restockHistory.slice(-11),Date.now()]:[Date.now()]};
+    items[it.id]={...items[it.id],...update};
+    if(famId!=='local')await updateDoc(doc(db,`families/${famId}/items/${it.id}`),update);
   }
-  if(familyId!=='local')await logActivity(`${memberName} 完成補貨，更新了 ${lowItems.length} 件商品`);
-  checkedShopItems.clear();showToast('✅ 已更新所有庫存！');renderCurrentTab();
+  if(famId!=='local'&&low.length)await logAct(`${myName} 完成補貨，更新了 ${low.length} 件商品`);
+  shopChecked.clear();toast('✅ 庫存已全部更新！');renderTab();
 };
-window.shareWhatsApp=function(){
-  const lowItems=Object.values(items).filter(i=>(i.qty||0)<=(i.threshold||1));
-  let msg=`🏠 *家庫採購清單*\n\n`;
-  lowItems.forEach(item=>{msg+=`${item.qty===0?'❌':'⚠️'} ${item.name} (現有：${item.qty||0} ${item.unit})\n`;});
-  msg+=`\n_由 HomStock 家庫 生成_`;
-  window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`,'_blank');
+window.waShare=function(){
+  const low=Object.values(items).filter(i=>(i.qty||0)<=(i.threshold||1));
+  if(!low.length){toast('目前沒有需要補貨的商品');return;}
+  let msg='🏠 *全家庫有 RichHome — 採購清單*\n\n';
+  low.forEach(it=>{
+    msg+=`${it.qty===0?'❌':'⚠️'} ${it.name}（現有：${it.qty||0} ${it.unit}，補至：${(it.threshold||1)*3} ${it.unit}）\n`;
+    if(it.links&&it.links[0])msg+=`  🛒 ${it.links[0]}\n`;
+  });
+  msg+=`\n📅 ${new Date().toLocaleDateString('zh-HK')}\n📱 _由 全家庫有 RichHome 生成_`;
+  window.open('https://api.whatsapp.com/send?text='+encodeURIComponent(msg),'_blank');
 };
 
-function renderFamily(){
-  const memberList=Object.values(members);
-  const inviteCode=localStorage.getItem('homstock_invite')||generateInviteCode();
-  const colors=['#5B5FEF','#16A34A','#D97706','#DC2626','#7C3AED','#0891B2'];
-  const bgColors=['#EDE9FE','#DCFCE7','#FEF3C7','#FEE2E2','#F3E8FF','#CFFAFE'];
-  document.getElementById('main-content').innerHTML=`
-    <div class="section-title"><span>邀請家人</span></div>
-    <div class="invite-code">
-      <p>分享邀請碼給家人</p>
-      <div class="code">${inviteCode}</div>
-      <p>有效期24小時 · 最多6位成員</p>
+// FAMILY
+function renderFam(){
+  const mList=Object.values(members);
+  const code=localStorage.getItem('hs_code')||genCode();
+  const avC=[['#EDE9FE','#5B5FEF'],['#DCFCE7','#16A34A'],['#FEF3C7','#D97706'],['#FEE2E2','#DC2626'],['#F3E8FF','#7C3AED'],['#CFFAFE','#0891B2']];
+  document.getElementById('content').innerHTML=`
+    <div class="stitle"><span>邀請家人</span></div>
+    <div class="ic2"><p>分享以下邀請碼給家人</p><div class="code">${code}</div><p>家人在「加入家庭」輸入此碼即可同步庫存</p></div>
+    <button class="bs" onclick="copyCode('${code}')">複製邀請碼</button>
+    <button class="bs" style="margin-top:6px" onclick="openM('m-join')">加入他人家庭</button>
+    <div class="stitle" style="margin-top:18px"><span>成員 (${Math.max(mList.length,1)})</span></div>
+    <div class="fc">
+      ${mList.length?mList.map((m,i)=>`<div class="mrow">
+        <div class="av" style="background:${avC[i%6][0]};color:${avC[i%6][1]}">${(m.name||'?')[0]}</div>
+        <div><div style="font-size:14px;font-weight:600;color:var(--text)">${m.name||'匿名'}</div><div style="font-size:11px;color:var(--text3)">${i===0?'管理員':'成員'}</div></div>
+      </div>`).join(''):`<div class="mrow">
+        <div class="av" style="background:#EDE9FE;color:#5B5FEF">${myName[0]}</div>
+        <div><div style="font-size:14px;font-weight:600;color:var(--text)">${myName}</div><div style="font-size:11px;color:var(--text3)">管理員</div></div>
+      </div>`}
     </div>
-    <button class="btn-secondary" onclick="copyInviteCode('${inviteCode}')">複製邀請碼</button>
-    <button class="btn-secondary" onclick="openJoinFamily()" style="margin-top:6px">加入他人家庭</button>
-    <div class="section-title" style="margin-top:20px"><span>成員 (${Math.max(memberList.length,1)})</span></div>
-    <div class="family-card">
-      ${memberList.length?memberList.map((m,i)=>`
-        <div class="member-row">
-          <div class="avatar" style="background:${bgColors[i%6]};color:${colors[i%6]}">${(m.name||'?').charAt(0)}</div>
-          <div style="flex:1"><div style="font-size:14px;font-weight:600;color:var(--text)">${m.name||'匿名成員'}</div><div style="font-size:12px;color:var(--text3)">成員</div></div>
-        </div>`).join(''):`<div class="member-row">
-          <div class="avatar" style="background:#EDE9FE;color:#5B5FEF">${memberName.charAt(0)}</div>
-          <div style="flex:1"><div style="font-size:14px;font-weight:600;color:var(--text)">${memberName}</div><div style="font-size:12px;color:var(--text3)">管理員</div></div>
-        </div>`}
+    <div class="stitle" style="margin-top:18px"><span>最近動態</span></div>
+    <div class="fc">
+      ${acts.length?acts.slice(0,15).map(a=>`<div class="arow"><div class="adot"></div>
+        <div><div class="atxt">${a.text||''}</div><div class="atime">${a.tsMs?timeAgo(a.tsMs):'剛才'}</div></div>
+      </div>`).join(''):'<div style="font-size:13px;color:var(--text3);padding:6px;font-weight:500">暫無動態</div>'}
     </div>
-    <div class="section-title" style="margin-top:20px"><span>最近動態</span></div>
-    <div class="family-card">
-      ${activities.length?activities.slice(0,15).map(a=>`
-        <div class="activity-row">
-          <div class="activity-dot"></div>
-          <div><div class="activity-text">${a.text||''}</div><div class="activity-time">${a.tsMs?timeAgo(a.tsMs):'剛才'}</div></div>
-        </div>`).join(''):'<div style="font-size:13px;color:var(--text3);padding:8px;font-weight:500">暫無動態</div>'}
-    </div>
-    <button class="btn-secondary" style="margin-top:8px" onclick="changeMemberName()">修改我的名稱</button>
-    <div style="height:20px"></div>`;
+    <button class="bs" style="margin-top:8px" onclick="chName()">修改我的名稱</button>
+    <div style="height:16px"></div>`;
 }
-
-function generateInviteCode(){const c=Math.random().toString(36).substr(2,6).toUpperCase();localStorage.setItem('homstock_invite',c);return c;}
-window.copyInviteCode=function(code){navigator.clipboard.writeText(code).then(()=>showToast('✅ 邀請碼已複製！')).catch(()=>showToast('邀請碼：'+code));};
-window.openJoinFamily=function(){document.getElementById('join-modal').classList.add('open');};
-window.joinFamily=async function(){
-  const name=document.getElementById('join-name').value.trim();
-  const code=document.getElementById('join-code').value.trim().toUpperCase();
-  if(!name||!code){showToast('請填寫名稱和邀請碼');return;}
-  showToast('🔍 搜尋家庭中...');
+function genCode(){const c=Math.random().toString(36).substr(2,6).toUpperCase();localStorage.setItem('hs_code',c);return c;}
+window.copyCode=function(c){navigator.clipboard.writeText(c).then(()=>toast('✅ 邀請碼已複製！')).catch(()=>toast('邀請碼：'+c));};
+window.openM=function(id){document.getElementById(id).classList.add('open');};
+window.joinFam=async function(){
+  const name=document.getElementById('j-name').value.trim();
+  const code=document.getElementById('j-code').value.trim().toUpperCase();
+  const st=document.getElementById('j-status');
+  if(!name){st.textContent='⚠️ 請輸入你的名稱';st.style.color='var(--red)';return;}
+  if(code.length<6){st.textContent='⚠️ 請輸入完整的6位邀請碼';st.style.color='var(--red)';return;}
+  st.textContent='🔍 搜尋家庭中...';st.style.color='var(--text3)';
   try{
-    const famsSnap=await getDocs(collection(db,'families'));
-    let found=null;
-    famsSnap.forEach(d=>{if(d.data().code===code)found={id:d.id,...d.data()};});
-    if(found){
-      familyId=found.id;familyName=found.name;memberName=name;
-      await setDoc(doc(db,`families/${familyId}/members/${currentUser.uid}`),{name,uid:currentUser.uid,joinedAt:serverTimestamp()});
-      localStorage.setItem('homstock_family',JSON.stringify({fid:familyId,fname:familyName,mname:name}));
-      document.getElementById('family-name').textContent=familyName;
-      closeModal('join-modal');listenFamily();showToast(`✅ 已加入「${familyName}」！`);
-    } else showToast('❌ 找不到此邀請碼');
-  }catch(e){showToast('連線失敗，請重試');}
+    const snap=await getDocs(collection(db,'families'));
+    let found=null;snap.forEach(d=>{if((d.data().code||'').toUpperCase()===code)found={id:d.id,...d.data()};});
+    if(!found){st.textContent='❌ 找不到此邀請碼，請確認後重試';st.style.color='var(--red)';return;}
+    st.textContent='✅ 找到「'+(found.name||'家庭')+'」，正在加入...';st.style.color='var(--green)';
+    if(unsub1)unsub1();if(unsub2)unsub2();if(unsub3)unsub3();
+    famId=found.id;famName=found.name||'家庭';myName=name;
+    await setDoc(doc(db,`families/${famId}/members/${uid}`),{name,uid,joinedAt:serverTimestamp()});
+    await logAct(`${name} 加入了家庭`);
+    saveFamLocal();document.getElementById('fam-name').textContent=famName;
+    items={};members={};acts=[];
+    closeM('m-join');toast(`✅ 已成功加入「${famName}」！`);
+    listenFam();goTab('inv');
+  }catch(e){st.textContent='❌ 連線失敗：'+e.message;st.style.color='var(--red)';}
 };
-window.changeMemberName=function(){
-  const name=prompt('輸入你的名稱：',memberName);
-  if(name&&name.trim()){
-    memberName=name.trim();
-    const stored=JSON.parse(localStorage.getItem('homstock_family')||'{}');
-    stored.mname=memberName;localStorage.setItem('homstock_family',JSON.stringify(stored));
-    if(familyId!=='local'&&currentUser)setDoc(doc(db,`families/${familyId}/members/${currentUser.uid}`),{name:memberName,uid:currentUser.uid,updatedAt:serverTimestamp()},{merge:true});
-    showToast(`✅ 名稱已更新為「${memberName}」`);renderFamily();
-  }
+window.chName=function(){
+  const n=prompt('輸入你的名稱：',myName);
+  if(n&&n.trim()){myName=n.trim();saveFamLocal();if(famId!=='local'&&uid)setDoc(doc(db,`families/${famId}/members/${uid}`),{name:myName,uid,updatedAt:serverTimestamp()},{merge:true});toast(`✅ 名稱已更新為「${myName}」`);renderFam();}
 };
 
-function renderAnalysis(){
+// ANALYSIS — with purchase history timeline + forecast
+function renderAnal(){
   const all=Object.values(items);
   const maxQ=Math.max(...all.map(i=>i.qty||0),1);
   const sorted=all.slice().sort((a,b)=>(a.qty||0)-(b.qty||0)).slice(0,8);
   const cats=[...new Set(all.map(i=>i.cat||'其他'))];
-  const catColors=['#5B5FEF','#16A34A','#D97706','#DC2626','#7C3AED','#0891B2'];
-  document.getElementById('main-content').innerHTML=`
-    <div class="stats" style="grid-template-columns:repeat(2,minmax(0,1fr));margin-bottom:16px">
-      <div class="stat-card ok"><div class="stat-num ok">${all.length}</div><div class="stat-label ok">總商品數</div></div>
-      <div class="stat-card" style="background:#EDE9FE;border-color:#DDD6FE"><div class="stat-num" style="color:#5B5FEF">${cats.length}</div><div class="stat-label" style="color:#6D28D9">商品類別</div></div>
+  const cc=['#5B5FEF','#16A34A','#D97706','#DC2626','#7C3AED','#0891B2'];
+  const now=Date.now();
+
+  // Build forecast data per item
+  function getForecast(it){
+    const dpu=it.daysPerUnit||7;
+    const qty=it.qty||0;
+    const totalDaysLeft=qty*dpu;
+    const depletionDate=new Date(now+totalDaysLeft*864e5);
+    const warnDate=new Date(now+(qty-((it.threshold||1)))*dpu*864e5);
+    const lastR=it.lastRestocked?new Date(it.lastRestocked):null;
+    // Average restock interval from history
+    let avgInterval=null;
+    const hist=it.restockHistory;
+    if(hist&&hist.length>=2){
+      const intervals=[];for(let i=1;i<hist.length;i++)intervals.push((hist[i]-hist[i-1])/864e5);
+      avgInterval=Math.round(intervals.reduce((a,b)=>a+b,0)/intervals.length);
+    }
+    // Suggested buy-ahead date: 3 days before depletion warning
+    const suggestBuyDate=new Date(warnDate.getTime()-3*864e5);
+    return{dpu,totalDaysLeft:Math.round(totalDaysLeft),depletionDate,warnDate,lastR,avgInterval,suggestBuyDate};
+  }
+
+  const urgentItems=all.filter(it=>{const f=getForecast(it);return f.totalDaysLeft<14&&(it.qty||0)>0;}).sort((a,b)=>getForecast(a).totalDaysLeft-getForecast(b).totalDaysLeft);
+
+  // Build timeline entries for top items
+  function buildTimeline(it){
+    const f=getForecast(it);
+    const entries=[];
+    if(f.lastR)entries.push({date:f.lastR,label:'上次補貨',sub:`補充至 ${it.qty||0} ${it.unit}`,type:'filled'});
+    entries.push({date:new Date(now),label:'現在',sub:`剩餘 ${it.qty||0} ${it.unit}（${f.totalDaysLeft} 天）`,type:'filled'});
+    if(f.suggestBuyDate>new Date(now))entries.push({date:f.suggestBuyDate,label:'建議採購日',sub:`提前購買以避免缺貨`,type:'warn'});
+    entries.push({date:f.warnDate,label:'庫存警示線',sub:`降至警示水位 ${it.threshold||1} ${it.unit}`,type:'danger'});
+    entries.push({date:f.depletionDate,label:'預計用完',sub:`按每單位 ${f.dpu} 天消耗`,type:'future'});
+    return entries.sort((a,b)=>a.date-b.date);
+  }
+
+  const fmt=d=>d.toLocaleDateString('zh-HK',{month:'short',day:'numeric'});
+  const topItems=all.filter(i=>(i.qty||0)>0).slice(0,4);
+
+  document.getElementById('content').innerHTML=`
+    <div class="stats" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+      <div class="sc ok"><div class="sn ok">${all.length}</div><div class="sl ok">總商品數</div></div>
+      <div class="sc" style="background:#EDE9FE;border-color:#DDD6FE"><div class="sn" style="color:#5B5FEF">${cats.length}</div><div class="sl" style="color:#6D28D9">商品類別</div></div>
     </div>
-    <div class="section-title"><span>庫存量排行（低→高）</span></div>
-    <div style="background:#fff;border-radius:var(--radius);padding:16px;border:1.5px solid var(--border);margin-bottom:16px">
-      ${sorted.map(item=>{
-        const q=item.qty||0,t=item.threshold||1;
-        const pct=Math.round((q/maxQ)*100);
-        const cls=q===0?'empty-bar':q<=t?'warn':'';
-        return `<div class="chart-bar-row">
-          <div class="chart-label">${item.emoji||'📦'} ${item.name.length>5?item.name.slice(0,5)+'…':item.name}</div>
-          <div class="chart-outer"><div class="chart-bar ${cls}" style="width:${Math.max(pct,8)}%"><span class="chart-bar-val">${q}</span></div></div>
-        </div>`;
-      }).join('')}
-    </div>
-    <div class="section-title"><span>補貨預測</span></div>
-    <div style="background:#fff;border-radius:var(--radius);padding:16px;border:1.5px solid var(--border);margin-bottom:16px">
-      ${all.filter(i=>(i.qty||0)>0).slice(0,6).map(item=>{
-        const daysLeft=Math.min(Math.round((item.qty||0)/Math.max(0.3,1/7)*7),99);
-        const urgency=daysLeft<7?'badge-red':daysLeft<14?'badge-yellow':'badge-green';
-        const urgText=daysLeft<7?'本週需補':daysLeft<14?'兩週內':'充裕';
-        return `<div style="display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1.5px solid var(--border)">
-          <div style="font-size:14px;font-weight:500;color:var(--text)">${item.emoji||'📦'} ${item.name}</div>
-          <div style="display:flex;align-items:center;gap:8px">
-            <span style="font-size:12px;color:var(--text3);font-weight:500">約 ${daysLeft} 天</span>
-            <span class="badge ${urgency}">${urgText}</span>
+
+    ${urgentItems.length?`
+    <div class="stitle" style="margin-top:4px"><span>⚡ 14天內需採購</span></div>
+    <div style="background:#fff;border-radius:var(--r);padding:14px;border:1.5px solid var(--red-lt);margin-bottom:12px">
+      ${urgentItems.map(it=>{
+        const f=getForecast(it);
+        const ug=f.totalDaysLeft<7?'bdg-r':'bdg-y';
+        return`<div style="display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border)">
+          <div style="font-size:13px;font-weight:600;color:var(--text)">${it.emoji||'📦'} ${it.name}</div>
+          <div style="display:flex;gap:6px;align-items:center">
+            <span style="font-size:11px;color:var(--text3)">建議 ${fmt(f.suggestBuyDate)}</span>
+            <span class="bdg ${ug}">${f.totalDaysLeft}天</span>
           </div>
         </div>`;
       }).join('')}
-      <div style="font-size:11px;color:var(--text3);margin-top:10px;font-weight:500">*基於平均消耗估算</div>
+    </div>`:''}
+
+    <div class="stitle"><span>庫存時間表</span></div>
+    ${topItems.map(it=>{
+      const f=getForecast(it);
+      const tl=buildTimeline(it);
+      return`<div class="forecast-card">
+        <div class="forecast-header">
+          <div class="forecast-name">${it.emoji||'📦'} ${it.name}</div>
+          <span class="bdg ${f.totalDaysLeft<7?'bdg-r':f.totalDaysLeft<14?'bdg-y':'bdg-g'}">剩 ${f.totalDaysLeft} 天</span>
+        </div>
+        <div style="padding:4px 0">
+          ${tl.map((e,i)=>`<div class="tl-item">
+            <div class="tl-left">
+              <div class="tl-dot ${e.type}"></div>
+              ${i<tl.length-1?`<div class="tl-line"></div>`:''}
+            </div>
+            <div class="tl-content">
+              <div class="tl-date">${fmt(e.date)}</div>
+              <div class="tl-label">${e.label}</div>
+              <div class="tl-sub">${e.sub}</div>
+            </div>
+          </div>`).join('')}
+        </div>
+        ${f.avgInterval?`<div style="margin-top:8px;padding:8px;background:var(--bg3);border-radius:8px;font-size:12px;color:var(--text2)">📊 歷史平均補貨週期：<strong>${f.avgInterval} 天</strong>一次</div>`:''}
+      </div>`;
+    }).join('')}
+
+    <div class="stitle"><span>庫存量排行（低→高）</span></div>
+    <div style="background:#fff;border-radius:var(--r);padding:14px;border:1.5px solid var(--border);margin-bottom:12px">
+      ${sorted.map(it=>{const q=it.qty||0,t=it.threshold||1,pct=Math.round(q/maxQ*100);const c=q===0?'ng':q<=t?'wn':'';
+      return`<div class="cbr"><div class="clbl">${it.emoji||'📦'} ${it.name.length>5?it.name.slice(0,5)+'…':it.name}</div>
+        <div class="cout"><div class="cbar ${c}" style="width:${Math.max(pct,8)}%"><span class="cbarv">${q}</span></div></div></div>`;}).join('')}
     </div>
-    <div class="section-title"><span>類別分佈</span></div>
-    <div style="background:#fff;border-radius:var(--radius);padding:16px;border:1.5px solid var(--border);margin-bottom:16px">
-      ${cats.map((cat,i)=>{
-        const count=all.filter(item=>item.cat===cat).length;
-        const pct=Math.round(count/all.length*100);
-        return `<div class="chart-bar-row">
-          <div class="chart-label" style="font-size:12px">${cat}</div>
-          <div class="chart-outer"><div class="chart-bar" style="width:${Math.max(pct,8)}%;background:${catColors[i%6]}"><span class="chart-bar-val">${count}件</span></div></div>
-        </div>`;
-      }).join('')}
+
+    <div class="stitle"><span>類別分佈</span></div>
+    <div style="background:#fff;border-radius:var(--r);padding:14px;border:1.5px solid var(--border);margin-bottom:12px">
+      ${cats.map((c,i)=>{const cnt=all.filter(it=>it.cat===c).length,pct=Math.round(cnt/all.length*100);
+      return`<div class="cbr"><div class="clbl" style="font-size:11px">${c}</div>
+        <div class="cout"><div class="cbar" style="width:${Math.max(pct,8)}%;background:${cc[i%6]}"><span class="cbarv">${cnt}件</span></div></div></div>`;}).join('')}
     </div>
-    <div style="height:20px"></div>`;
+    <div style="font-size:11px;color:var(--text3);text-align:center;margin-bottom:16px">*消耗預測基於每件商品設定的「平均使用天數/單位」計算<br>在商品編輯頁可調整此數值使預測更準確</div>
+    <div style="height:16px"></div>`;
 }
 
-window.openAddItem=function(){
-  editingItemId=null;
-  document.getElementById('item-modal-title').textContent='新增商品';
-  ['item-name','item-emoji','item-barcode','item-links'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('item-qty').value='1';
-  document.getElementById('item-threshold').value='2';
-  document.getElementById('delete-btn').style.display='none';
-  document.getElementById('item-modal').classList.add('open');
+// ADD/EDIT ITEM
+window.openAdd=function(){
+  editId=null;
+  document.getElementById('m-item-title').textContent='新增商品';
+  ['f-name','f-emoji','f-barcode','f-links'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('f-qty').value='1';document.getElementById('f-thresh').value='2';document.getElementById('f-days').value='7';
+  document.getElementById('f-del').style.display='none';document.getElementById('m-item').classList.add('open');
 };
-window.openEditItem=function(id){
-  const item=items[id];if(!item)return;
-  editingItemId=id;
-  document.getElementById('item-modal-title').textContent='編輯商品';
-  document.getElementById('item-name').value=item.name||'';
-  document.getElementById('item-emoji').value=item.emoji||'';
-  document.getElementById('item-qty').value=item.qty||0;
-  document.getElementById('item-threshold').value=item.threshold||1;
-  document.getElementById('item-barcode').value=item.barcode||'';
-  document.getElementById('item-links').value=(item.links||[]).join('\n');
-  document.getElementById('item-cat').value=item.cat||'衛生';
-  document.getElementById('item-unit').value=item.unit||'個';
-  document.getElementById('delete-btn').style.display='block';
-  document.getElementById('item-modal').classList.add('open');
+window.openEdit=function(id){
+  const it=items[id];if(!it)return;editId=id;
+  document.getElementById('m-item-title').textContent='編輯商品';
+  document.getElementById('f-name').value=it.name||'';document.getElementById('f-emoji').value=it.emoji||'';
+  document.getElementById('f-qty').value=it.qty||0;document.getElementById('f-thresh').value=it.threshold||1;
+  document.getElementById('f-days').value=it.daysPerUnit||7;document.getElementById('f-barcode').value=it.barcode||'';
+  document.getElementById('f-links').value=(it.links||[]).join('\n');
+  document.getElementById('f-cat').value=it.cat||'衛生';document.getElementById('f-unit').value=it.unit||'個';
+  document.getElementById('f-del').style.display='block';document.getElementById('m-item').classList.add('open');
 };
 window.saveItem=async function(){
-  const name=document.getElementById('item-name').value.trim();
-  if(!name){showToast('請輸入商品名稱');return;}
-  const data={
-    name,emoji:document.getElementById('item-emoji').value||'📦',
-    cat:document.getElementById('item-cat').value,
-    qty:parseInt(document.getElementById('item-qty').value)||0,
-    unit:document.getElementById('item-unit').value,
-    threshold:parseInt(document.getElementById('item-threshold').value)||1,
-    barcode:document.getElementById('item-barcode').value.trim(),
-    links:document.getElementById('item-links').value.split('\n').map(l=>l.trim()).filter(Boolean),
-    updatedBy:memberName,updatedAt:serverTimestamp()
-  };
-  closeModal('item-modal');
-  if(familyId==='local'){const id=editingItemId||`local_${Date.now()}`;items[id]={...data,id};renderCurrentTab();showToast(editingItemId?'✅ 已更新':'✅ 已新增');}
-  else if(editingItemId){await updateDoc(doc(db,`families/${familyId}/items/${editingItemId}`),data);await logActivity(`${memberName} 更新了「${name}」`);showToast('✅ 已更新');}
-  else{await addDoc(collection(db,`families/${familyId}/items`),data);await logActivity(`${memberName} 新增了「${name}」`);showToast('✅ 已新增');}
+  const name=document.getElementById('f-name').value.trim();if(!name){toast('請輸入商品名稱');return;}
+  const data={name,emoji:document.getElementById('f-emoji').value||'📦',cat:document.getElementById('f-cat').value,qty:parseInt(document.getElementById('f-qty').value)||0,unit:document.getElementById('f-unit').value,threshold:parseInt(document.getElementById('f-thresh').value)||1,daysPerUnit:parseInt(document.getElementById('f-days').value)||7,barcode:document.getElementById('f-barcode').value.trim(),links:document.getElementById('f-links').value.split('\n').map(l=>l.trim()).filter(Boolean),updatedBy:myName,updatedAt:serverTimestamp()};
+  closeM('m-item');
+  if(famId==='local'){const id=editId||`l${Date.now()}`;items[id]={...data,id,lastRestocked:items[id]?.lastRestocked||Date.now()};renderTab();toast(editId?'✅ 已更新':'✅ 已新增');}
+  else if(editId){await updateDoc(doc(db,`families/${famId}/items/${editId}`),data);await logAct(`${myName} 更新了「${name}」`);toast('✅ 已更新');}
+  else{await addDoc(collection(db,`families/${famId}/items`),{...data,lastRestocked:Date.now()});await logAct(`${myName} 新增了「${name}」`);toast('✅ 已新增');}
 };
-window.deleteCurrentItem=async function(){
-  if(!editingItemId||!confirm('確定刪除此商品？'))return;
-  const name=items[editingItemId]?.name||'';
-  closeModal('item-modal');
-  if(familyId==='local')delete items[editingItemId];
-  else{await deleteDoc(doc(db,`families/${familyId}/items/${editingItemId}`));await logActivity(`${memberName} 刪除了「${name}」`);}
-  showToast('🗑️ 已刪除');renderCurrentTab();
+window.delItem=async function(){
+  if(!editId||!confirm('確定刪除此商品？'))return;
+  const name=items[editId]?.name||'';closeM('m-item');
+  if(famId==='local')delete items[editId];
+  else{await deleteDoc(doc(db,`families/${famId}/items/${editId}`));await logAct(`${myName} 刪除了「${name}」`);}
+  toast('🗑️ 已刪除');renderTab();
 };
 
+// SCANNER
 window.openScanner=async function(){
-  document.getElementById('scanner-modal').classList.add('open');
-  document.getElementById('scanner-result').textContent='正在啟動相機...';
+  document.getElementById('m-scan').classList.add('open');document.getElementById('scan-res').textContent='正在啟動相機...';
   try{
-    scanStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});
-    const video=document.getElementById('scanner-video');
-    video.srcObject=scanStream;await video.play();
-    document.getElementById('scanner-result').textContent='請將條碼對準鏡頭';
+    scanStr=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});
+    const v=document.getElementById('scan-vid');v.srcObject=scanStr;await v.play();
+    document.getElementById('scan-res').textContent='請將條碼對準鏡頭';
     if(typeof Quagga!=='undefined'){
-      Quagga.init({inputStream:{type:'LiveStream',target:video,constraints:{facingMode:'environment'}},decoder:{readers:['ean_reader','ean_8_reader','code_128_reader','upc_reader']}},err=>{
+      Quagga.init({inputStream:{type:'LiveStream',target:v,constraints:{facingMode:'environment'}},decoder:{readers:['ean_reader','ean_8_reader','code_128_reader','upc_reader']}},err=>{
         if(!err){Quagga.start();Quagga.onDetected(r=>{
-          const code=r.codeResult.code;
-          document.getElementById('scanner-result').textContent=`✅ 掃描到：${code}`;
-          stopScanner();
-          const found=Object.values(items).find(i=>i.barcode===code);
-          if(found){showToast(`找到：${found.name}`);openEditItem(found.id);}
-          else{openAddItem();document.getElementById('item-barcode').value=code;}
+          const code=r.codeResult.code;document.getElementById('scan-res').textContent=`✅ 掃描到：${code}`;stopScan();
+          const f=Object.values(items).find(i=>i.barcode===code);
+          if(f){toast(`找到：${f.name}`);openEdit(f.id);}
+          else{openAdd();setTimeout(()=>{document.getElementById('f-barcode').value=code;},150);}
         });}
       });
     }
-  }catch(e){document.getElementById('scanner-result').textContent='無法開啟相機，請確認授權';}
+  }catch(e){document.getElementById('scan-res').textContent='無法開啟相機，請確認授權';}
 };
-window.stopScanner=function(){
-  if(typeof Quagga!=='undefined'){try{Quagga.stop();}catch(e){}}
-  if(scanStream){scanStream.getTracks().forEach(t=>t.stop());scanStream=null;}
-  closeModal('scanner-modal');
-};
+window.stopScan=function(){if(typeof Quagga!=='undefined'){try{Quagga.stop();}catch(e){}}if(scanStr){scanStr.getTracks().forEach(t=>t.stop());scanStr=null;}closeM('m-scan');};
 
-function checkNotifications(){
+function checkNotif(){
   const low=Object.values(items).filter(i=>(i.qty||0)<=(i.threshold||1));
-  if(low.length&&'Notification'in window&&Notification.permission==='granted'){
-    low.slice(0,2).forEach(item=>new Notification('家庫 HomStock',{body:`${item.name} ${item.qty===0?'已用完':'庫存偏低'}，記得補貨！`}));
-  }else if(low.length&&'Notification'in window&&Notification.permission==='default')Notification.requestPermission();
+  if(!low.length)return;
+  if('Notification'in window&&Notification.permission==='granted'){low.slice(0,2).forEach(it=>new Notification('全家庫有 RichHome',{body:`${it.name} ${it.qty===0?'已用完':'庫存偏低'}，記得補貨！`}));}
+  else if('Notification'in window&&Notification.permission==='default')Notification.requestPermission();
 }
 
-window.closeModal=function(id){document.getElementById(id).classList.remove('open');};
-function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
-window.showToast=showToast;
-function timeAgo(ms){const d=Date.now()-ms;if(d<60000)return '剛才';if(d<3600000)return `${Math.floor(d/60000)} 分鐘前`;if(d<86400000)return `${Math.floor(d/3600000)} 小時前`;return `${Math.floor(d/86400000)} 天前`;}
-
+window.closeM=function(id){document.getElementById(id).classList.remove('open');};
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600);}
+function timeAgo(ms){const d=Date.now()-ms;if(d<60000)return'剛才';if(d<3600000)return`${Math.floor(d/60000)}分鐘前`;if(d<86400000)return`${Math.floor(d/3600000)}小時前`;return`${Math.floor(d/86400000)}天前`;}
 document.querySelectorAll('.overlay').forEach(el=>el.addEventListener('click',e=>{if(e.target===el)el.classList.remove('open');}));
 if('serviceWorker'in navigator)navigator.serviceWorker.register('/sw.js').catch(()=>{});
-renderInventory();
+renderInv();
 </script>
+</body>
+</html>
